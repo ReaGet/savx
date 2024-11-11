@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Savx",
+  "description": "Save what you typped so long",
+  "version": "1.0",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "run_at": "document_start",
+  "content_scripts": [{
+    "js": ["assets/content.js"],
+    "matches": ["https://*/*"]
+  }],
+  "background": {
+    "service_worker": "assets/background.js"
+  }
+}

@@ -1,0 +1,1 @@
+chrome.runtime.onMessage.addListener((s,c,n)=>{if(s.action==="saveInput"){const{key:e,value:o}=s;chrome.storage.local.get([e],a=>{const t=a[e]||[];t.includes(o)||(t.push(o),chrome.storage.local.set({[e]:t}))})}else if(s.action==="getSuggestions"){const{key:e}=s;return chrome.storage.local.get([e],o=>{n({suggestions:o[e]||[]})}),!0}});
