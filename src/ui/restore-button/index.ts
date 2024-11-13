@@ -39,15 +39,19 @@ export const restoreButton = (props?: Props): RestoreButton => {
       return buttonInstance
     },
     show(pos?: Position) {
-      this.button.classList.add('js-active')
-      const { x = 0, y = 0 } = pos || {}
-      this.button.style.left = `${x}px`
-      this.button.style.top = `${y}px`
-      isShown = false
+      setTimeout(() => {
+        this.button.classList.add('js-active')
+        const { x = 0, y = 0 } = pos || {}
+        this.button.style.left = `${x}px`
+        this.button.style.top = `${y}px`
+        isShown = true
+      }, 100)
     },
     hide() {
-      this.button.classList.remove('js-active')
-      isShown = true
+      setTimeout(() => {
+        this.button.classList.remove('js-active')
+        isShown = false
+      }, 100)
     }
   }
 

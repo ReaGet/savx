@@ -35,3 +35,19 @@ export function getOffset(elem: HTMLElement | null): {
     height: elem?.offsetHeight || 0,
   }
 }
+
+export const isCurrentHasParent = (current: HTMLElement, parent: HTMLElement | null): boolean => {
+  if (!parent) return false
+  
+  let elem = current.parentNode
+  do {
+    if (elem === parent) return true
+
+  } while (elem = elem?.parentNode as ParentNode)
+    
+  return false
+}
+
+export const isSupportedNode = (elem: HTMLElement): boolean => {
+  return false
+}
