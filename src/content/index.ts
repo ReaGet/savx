@@ -1,12 +1,53 @@
+import '../../index.css'
+import { restoreButton } from '../ui/restore-button'
+import { getOffset } from '../utils'
+
+let currentInput: HTMLElement | null = null
+let mouse = {
+  x: 0,
+  y: 0
+}
+
 document.addEventListener('input', handleInput)
 document.addEventListener('focusin', handleFocus)
+document.addEventListener('click', handleClick)
+document.addEventListener('mousemove', handleMousemove)
+
+const Button = restoreButton({ size: 18 }).mount(document.body)
+
+Button.button.addEventListener('click', () => {
+  console.log('click')
+})
+
+function handleMousemove(event: MouseEvent) {
+  mouse.x = event.pageX
+  mouse.y = event.pageY
+}
+
+function handleClick(event: Event) {
+  const target = event.target as HTMLElement
+
+  console.log(currentInput, target)
+
+  if (!target.closest('.savx-btn')) {
+    // Button.hide()
+  }
+}
 
 function handleFocus(event: Event) {
   const target = event.target as HTMLInputElement
   if (!target) return
 
-  wrapEl(target)
-  showSuggestion(target, getKey(target))
+  currentInput = target
+  setTimeout(() => {
+    const boundingRect = getOffset(target)
+    console.log(boundingRect, Button.size)
+    
+    Button.show({
+      x: Math.max(Math.min(mouse.x, boundingRect.x + boundingRect.width), boundingRect.x) + 15,
+      y: boundingRect.y + (boundingRect.height - Button.size) / 2
+    })
+  }, 10)
 }
 
 function handleInput(event: Event) {
@@ -20,52 +61,10 @@ const saveValueForInput = (input: HTMLInputElement | HTMLTextAreaElement, value:
   localStorage.setItem(key, value)
 }
 
-const getValueByKey = (key: string): string | null => {
-  return localStorage.getItem(key)
-}
+// const getValueByKey = (key: string): string | null => {
+//   return localStorage.getItem(key)
+// }
 
 const getKey = (el: HTMLInputElement | HTMLTextAreaElement) => {
   return el?.name || el.id || el.className
-}
-
-const showSuggestion = (el: HTMLElement, key: string) => {
-  let datalist = document.getElementById('wrapper-suggestion')
-  if (!datalist) {
-    datalist = createSuggestion()
-    document.body.appendChild(datalist)
-  }
-  const value = getValueByKey(key)
-  console.log(datalist, value)
-  if (!value) {
-    datalist.style.display = 'none'
-    datalist.innerHTML = ''
-    return
-  }
-  console.log(el)
-  datalist.style.display = 'block'
-  datalist.innerHTML = value
-}
-
-const createSuggestion = () => {
-  const el = document.createElement('div')
-  el.id = 'wrapper-suggestion'
-  return el
-}
-
-const wrapEl = (el: HTMLInputElement) => {
-  const parent = el.parentNode as HTMLElement
-  if (!parent) return
-  if (parent.closest('.savx__input-wrapper')) return
-
-  const wrapper = document.createElement('div')
-  wrapper.classList.add('savx__input-wrapper')
-  wrapper.style.cssText = window.getComputedStyle(parent, "").cssText
-
-  parent.parentNode?.insertBefore(wrapper, parent)
-  wrapper.appendChild(parent)
-}
-
-const copyStyles = (source: HTMLInputElement, target: HTMLElement) => {
-  const styles = [...window.getComputedStyle(target)]
-  
 }

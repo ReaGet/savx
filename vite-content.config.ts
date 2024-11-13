@@ -10,7 +10,10 @@ export default defineConfig({
         content: "./src/content/index.ts",
       },
       output:{
-        entryFileNames: "assets/[name].js"
+        entryFileNames: "assets/[name].js",
+        assetFileNames: (assetInfo) => {
+          return `assets/${assetInfo.name}`;
+        }
       }
     },
   },
