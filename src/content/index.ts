@@ -1,9 +1,11 @@
 import '../../index.css'
 import { restoreButton } from '../ui/restore-button'
-import { getBoundingRect, isSupportedNode } from '../utils'
+import { getBoundingRect, isSupportedNode, loadFont } from '../utils'
 import { Modal } from '../ui/modal'
 
-const modal = new Modal('suggestions', 'asd')
+loadFont()
+
+const modal = new Modal('suggestions', 'asd', 'Suggestions')
 
 document.addEventListener('focusin', handleFocusIn)
 document.addEventListener('focusout', handleFocusOut)
@@ -17,8 +19,8 @@ Button.button.addEventListener('click', () => {
 })
 
 function handleFocusIn(event: Event) {
-  console.log('focusIn')
   const target = event.target as HTMLInputElement
+  console.log('focusIn', target)
   if (!isSupportedNode(target) || (!target || target === Button.button)) return
 
   const boundingRect = getBoundingRect(target)

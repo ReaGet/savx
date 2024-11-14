@@ -1,9 +1,19 @@
-import { restoreButton } from "./ui/restore-button"
+import '../index.css'
 
-const button = restoreButton({ size: 14 })
+import { Modal } from './ui/modal'
+import { restoreButton } from './ui/restore-button'
+import { loadFont } from './utils'
 
-button.mount(document.body)
+loadFont()
 
-setTimeout(() => {
-  button.show()
-}, 1500)
+const button = restoreButton({ size: 14 }).mount(document.body)
+
+button.show()
+
+
+const modal = new Modal('suggestions', 'asd', 'Suggestions')
+
+button.button.addEventListener('click', () => {
+  modal.open()
+  console.log('Button click')
+})

@@ -1,26 +1,26 @@
-function getOffsetLeft(elem: HTMLElement | null): number {
-  let offsetLeft = 0
-  while (elem) {
-    if (!isNaN(elem.offsetLeft)) {
-      offsetLeft += elem.offsetLeft
-    }
+// function getOffsetLeft(elem: HTMLElement | null): number {
+//   let offsetLeft = 0
+//   while (elem) {
+//     if (!isNaN(elem.offsetLeft)) {
+//       offsetLeft += elem.offsetLeft
+//     }
 
-    elem = elem.offsetParent as HTMLElement
-  }
-  return offsetLeft
-}
+//     elem = elem.offsetParent as HTMLElement
+//   }
+//   return offsetLeft
+// }
 
-function getOffsetTop(elem: HTMLElement | null): number {
-  let offsetTop = 0
-  while (elem) {
-    if (!isNaN(elem.offsetTop)) {
-      offsetTop += elem.offsetTop
-    }
+// function getOffsetTop(elem: HTMLElement | null): number {
+//   let offsetTop = 0
+//   while (elem) {
+//     if (!isNaN(elem.offsetTop)) {
+//       offsetTop += elem.offsetTop
+//     }
 
-    elem = elem.offsetParent as HTMLElement
-  }
-  return offsetTop
-}
+//     elem = elem.offsetParent as HTMLElement
+//   }
+//   return offsetTop
+// }
 
 export function getBoundingRect(elem: HTMLElement | null): {
   x: number
@@ -28,9 +28,12 @@ export function getBoundingRect(elem: HTMLElement | null): {
   width: number
   height: number
 } {
+  const rect = elem?.getBoundingClientRect()
   return {
-    x: getOffsetLeft(elem),
-    y: getOffsetTop(elem),
+    // x: getOffsetLeft(elem),
+    // y: getOffsetTop(elem),
+    x: rect?.left || 0 + document.body.scrollLeft,
+    y: rect?.top || 0 + document.body.scrollTop,
     width: elem?.offsetWidth || 0,
     height: elem?.offsetHeight || 0,
   }
@@ -70,4 +73,13 @@ const isEditableElem = (elem: HTMLElement): boolean => {
     ['textbox'].includes(elem?.role || '') ||
     elem.contentEditable === 'true'
   )
+}
+
+export const loadFont = () => {
+  // <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  const link = document.createElement('link')
+  link.href = 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'
+  link.rel = 'stylesheet'
+
+  document.body.appendChild(link)
 }

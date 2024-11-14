@@ -4,6 +4,7 @@ interface IModal {
   el: HTMLElement | null
   name: string
   content: string
+  title: string
   open: () => void
   close: () => void
   setContent: (content: string) => void
@@ -15,9 +16,11 @@ export class Modal implements IModal {
   el: HTMLElement | null = null
   name: string = ''
   content: string = ''
-  constructor(name: string, content: string) {
+  title: string = ''
+  constructor(name: string, content: string, title: string) {
     this.name = name
     this.content = content
+    this.title = title
     this.init()
   }
 
@@ -30,7 +33,8 @@ export class Modal implements IModal {
     const div = document.createElement('div')
     div.innerHTML = modalTemplate({
       name: this.name,
-      content: this.content
+      content: this.content,
+      title: this.title
     })
 
     this.el = div.firstElementChild as HTMLElement
@@ -39,11 +43,16 @@ export class Modal implements IModal {
   }
 
   private bindEvents() {
+    let clickedEl: HTMLElement | null = null
     this.closeButton.addEventListener('click', () => this.close())
-    this.overlay.addEventListener('click', (event: Event) => {
-      const target = event.target as HTMLElement
-      if (target.closest('.modal-inner')) return
-      this.close()
+    document.addEventListener('mousedown', (event: Event) => {
+      if (event.target === this.overlay) this.close()
+    })
+
+    document.addEventListener('mouseup', (event: Event) => {
+      if (event.target  === clickedEl && clickedEl === event.currentTarget) {
+        this.close()
+      }
     })
 
     document.addEventListener('keydown', event => {

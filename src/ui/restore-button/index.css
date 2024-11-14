@@ -29,5 +29,6 @@
 }
 
 .savx-btn svg {
-  stroke: currentColor
+  stroke: currentColor !important;
+  fill: none !important;
 }
