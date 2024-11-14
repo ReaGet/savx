@@ -22,7 +22,7 @@ function getOffsetTop(elem: HTMLElement | null): number {
   return offsetTop
 }
 
-export function getOffset(elem: HTMLElement | null): {
+export function getBoundingRect(elem: HTMLElement | null): {
   x: number
   y: number
   width: number
@@ -49,5 +49,25 @@ export const isCurrentHasParent = (current: HTMLElement, parent: HTMLElement | n
 }
 
 export const isSupportedNode = (elem: HTMLElement): boolean => {
-  return false
+  if (!elem) return false
+
+  switch(elem.tagName) {
+    case 'INPUT':
+      return isSupportedInputType(elem as HTMLInputElement)
+    case 'TEXTAREA':
+      return true
+    default:
+      return isEditableElem(elem)
+  }
+}
+
+const isSupportedInputType = (elem: HTMLInputElement): boolean => {
+  return ['text'].includes(elem.type)
+}
+
+const isEditableElem = (elem: HTMLElement): boolean => {
+  return (
+    ['textbox'].includes(elem?.role || '') ||
+    elem.contentEditable === 'true'
+  )
 }

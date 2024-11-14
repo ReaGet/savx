@@ -1,9 +1,11 @@
 .savx-btn {
   position: fixed;
   display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 5px !important;
   border: 1px solid #ddd !important;
-  background-color: #F4F4F4 !important;
+  background-color: #f0f0f4 !important;
   border-radius: 5px !important;
   color: #999797 !important;
   cursor: pointer;
@@ -22,7 +24,8 @@
 }
 
 .savx-btn:hover {
-  background-color: #e8e8e8 !important;
+  background-color: #e0e0e6 !important;
+  color: #5b5b66 !important
 }
 
 .savx-btn svg {
