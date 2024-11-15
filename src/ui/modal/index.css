@@ -2,6 +2,10 @@
   font-family: "Roboto";
 }
 
+.modal {
+  box-sizing: border-box;
+}
+
 .modal-overlay {
   position: fixed;
   display: flex;
@@ -78,4 +82,39 @@
 
 .modal-close-btn:hover {
   color: #5b5b66;
+}
+
+.modal [data-modal-content] {
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+.modal [data-modal-content]::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 8px;
+  transition: all .2s ease-in-out;
+}
+
+.modal [data-modal-content]::-webkit-scrollbar-thumb:hover {
+  background-color: #ccc;
+}
+
+.modal [data-modal-content]::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 8px;
+}
+
+.modal [data-modal-content]::-webkit-scrollbar {
+  width: 7px !important;
+}
+
+.modal ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.modal button {
+  border: none;
+  background-color: transparent;
 }

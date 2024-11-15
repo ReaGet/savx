@@ -83,3 +83,15 @@ export const loadFont = () => {
 
   document.body.appendChild(link)
 }
+
+export const getFieldIdentifier = (element: HTMLElement & { name: string }) => {
+  const rect = element.getBoundingClientRect();
+  return `${element.id || ''}-${element?.name || ''}-${element.className || ''}-${Math.round(rect.x)}-${Math.round(rect.y)}`;
+}
+
+export const formatDate = (date: Date | string) => {
+  return new Intl.DateTimeFormat("ru-RU", {
+    dateStyle: "short",
+    timeStyle: "medium",
+  }).format(new Date(date))
+}

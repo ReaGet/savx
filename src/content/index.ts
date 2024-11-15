@@ -2,10 +2,11 @@ import '../../index.css'
 import { restoreButton } from '../ui/restore-button'
 import { getBoundingRect, isSupportedNode, loadFont } from '../utils'
 import { Modal } from '../ui/modal'
+import { suggestionsTemplate } from '../index'
 
 loadFont()
 
-const modal = new Modal('suggestions', 'asd', 'Suggestions')
+const modal = new Modal('suggestions', 'Suggestions')
 
 document.addEventListener('focusin', handleFocusIn)
 document.addEventListener('focusout', handleFocusOut)
@@ -14,6 +15,7 @@ document.addEventListener('input', handleInput)
 const Button = restoreButton({ size: 18 }).mount(document.body)
 
 Button.button.addEventListener('click', () => {
+  modal.setContent(suggestionsTemplate())
   modal.open()
   console.log('Button click')
 })
@@ -25,7 +27,6 @@ function handleFocusIn(event: Event) {
 
   const boundingRect = getBoundingRect(target)
   const offset = 15
-  console.log(boundingRect)
   Button.show({
     // x: Math.max(Math.min(mouse.x, boundingRect.x + boundingRect.width), boundingRect.x) + 15,
     x: boundingRect.x + boundingRect.width - (Button.size + offset),

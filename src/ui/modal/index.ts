@@ -17,9 +17,8 @@ export class Modal implements IModal {
   name: string = ''
   content: string = ''
   title: string = ''
-  constructor(name: string, content: string, title: string) {
+  constructor(name: string, title: string) {
     this.name = name
-    this.content = content
     this.title = title
     this.init()
   }
@@ -69,7 +68,10 @@ export class Modal implements IModal {
   }
 
   setContent(content: string) {
-    console.log(content)
+    const contentEl = this.el?.querySelector('[data-modal-content]')
+    if (!contentEl) return
+
+    contentEl.innerHTML = content
   }
 
   get closeButton() {
